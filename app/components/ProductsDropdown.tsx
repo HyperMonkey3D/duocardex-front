@@ -1,21 +1,38 @@
+import { useState } from "react"
+
 interface Props {
-  keyz: number;
+  keyz: string;
+  products: Data[]
 }
 
-const ProductsDropdown = ({ keyz }: Props) => {
+interface Data {
+  ProductID: string
+  ProductName: string
+}
+console.log()
+const ProductsDropdown = ({ keyz, products }: Props) => {
+  const [selectedProduct, setSelectedProduct] = useState("")
+  const [quantity, setQuantity] = useState("")
+  console.log(selectedProduct, quantity)
   return (
     <div className="flex" key={keyz + 1}>
       <div>
-        <label htmlFor="">{`${keyz + 1} ddd`}</label>
-        <select name="" id="" value={"d"}>
-          <option value="1">one</option>
-          <option value="2">two</option>
-          <option value="3">three</option>
+        <label htmlFor="">{`${keyz}`}</label>
+        <select name="" id="" value={selectedProduct} onChange={(e)=> setSelectedProduct(e.target.value)}>
+          <option defaultValue={"null"} >Click to select an option</option>
+          {
+            products.map((item:Data) => {
+              const {ProductID, ProductName} = item
+              return(
+                <option  value={ProductID} key={ProductID} >{ProductName}</option>
+              )
+            })
+          }
         </select>
       </div>
       <div>
         <label htmlFor="">Qty</label>
-        <input type="number" />
+        <input type="number" value={quantity} onChange={(e)=> setQuantity(e.target.value)} />
       </div>
     </div>
   );
