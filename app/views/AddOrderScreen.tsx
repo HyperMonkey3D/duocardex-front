@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 
+import {selectCount } from "@/app/features/temp/counterSlice";
+
 import ProductsDropdown from "../components/ProductsDropdown";
 import OrderSummary from "./OrderSummary";
 
-import type { RootState } from "@/app/redux/store";
+
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "@/app/features/temp/counterSlice";
+
 import axios from "axios";
 
 const AddOrderScreen = () => {
@@ -17,11 +19,11 @@ const AddOrderScreen = () => {
     ClinicName: string
   }
 
- 
+  const countz = useSelector(selectCount);
 
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
+  //const count = useSelector((state: RootState) => state.counter.value);
 
+console.log("111111111", countz)
   
 
   const [dropdownList, setDropdownList] = useState<JSX.Element[]>([]);
@@ -36,7 +38,7 @@ const AddOrderScreen = () => {
   const productsURL = "http://localhost:8000/items"
 
   const addNewDrop = () => {
-   
+    
     const newElement = <ProductsDropdown products={productList} keyz={`key-${dropdownList.length}`} />;
     setDropdownList((prevElementList) => [...prevElementList, newElement]);
     
@@ -67,13 +69,13 @@ const AddOrderScreen = () => {
     fetchProducts()
   }, [])
 
-
+console.log("Eeee", countz)
 
   return (
     <div className="bg-slate-300 h-full w-full">
       <div>
         <h2>add new order</h2>
-        <h3>{dropdownList.length}</h3>
+        
       </div>
       <div className="flex">
         <form>
@@ -97,6 +99,9 @@ const AddOrderScreen = () => {
             <button type="button" onClick={addNewDrop}>
               add more
             </button>
+          </div>
+          <div>
+          
           </div>
           <div>
             <label htmlFor="">Add a comment</label>

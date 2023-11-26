@@ -1,5 +1,6 @@
-import { useState } from "react"
-
+import { useState, useEffect } from "react"
+import {  incrementByAmount, selectCount } from "@/app/features/temp/counterSlice";
+import { useSelector, useDispatch } from "react-redux";
 interface Props {
   keyz: string;
   products: Data[]
@@ -9,16 +10,36 @@ interface Data {
   ProductID: string
   ProductName: string
 }
-console.log()
+
 const ProductsDropdown = ({ keyz, products }: Props) => {
-  const [selectedProduct, setSelectedProduct] = useState("")
-  const [quantity, setQuantity] = useState("")
-  console.log(selectedProduct, quantity)
+  const dispatch = useDispatch();
+  const count = useSelector(selectCount);
+const [text, setText] = useState({
+  select: "",
+  quantity: ""
+})
+
+const handleOnChange = (e:any) => {
+const {name, value} = e.target
+setText({...text, [name]:value}) 
+}
+
+
+useEffect(() => {
+ // console.log("qqqq", text)
+  if(text.quantity !== "") {
+    dispatch(incrementByAmount([text]))
+  }
+}, [text.quantity])
+
+
+  console.log("XXXX", count)
   return (
     <div className="flex" key={keyz + 1}>
+      
       <div>
         <label htmlFor="">{`${keyz}`}</label>
-        <select name="" id="" value={selectedProduct} onChange={(e)=> setSelectedProduct(e.target.value)}>
+        <select name="select" id="" value={text.select} onChange={handleOnChange}>
           <option defaultValue={"null"} >Click to select an option</option>
           {
             products.map((item:Data) => {
@@ -30,10 +51,10 @@ const ProductsDropdown = ({ keyz, products }: Props) => {
           }
         </select>
       </div>
-      <div>
+     { text.select!=="" && text.select !== "Click to select an option" && (<div>
         <label htmlFor="">Qty</label>
-        <input type="number" value={quantity} onChange={(e)=> setQuantity(e.target.value)} />
-      </div>
+        <input name="quantity" type="number" value={text.quantity} onChange={handleOnChange} />
+      </div>)}
     </div>
   );
 };
