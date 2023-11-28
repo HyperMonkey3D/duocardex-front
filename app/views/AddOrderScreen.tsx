@@ -23,7 +23,7 @@ const AddOrderScreen = () => {
 
   //const count = useSelector((state: RootState) => state.counter.value);
 
-console.log("111111111", countz)
+console.log("firs in addorderscren", countz)
   
 
   const [dropdownList, setDropdownList] = useState<JSX.Element[]>([]);
@@ -78,7 +78,7 @@ const [nextState, setNextState] = useState(false)
     fetchProducts()
   }, [])
 
-console.log("Eeee", countz)
+console.log("after use effect in addorderscreen", countz)
 
   return (
     <div className="bg-slate-300 h-full w-full">

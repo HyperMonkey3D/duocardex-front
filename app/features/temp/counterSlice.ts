@@ -1,22 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-
-export interface CounterState {
-  value: DataType[]
-}
+import type { RootState } from '@/app/redux/store'
 
 export interface DataType {
   select: string
   quantity: string
 }
 
+export interface CounterState {
+  value: DataType[]
+}
+
+
+
 const initialState: CounterState = {
-  value: [
-    {
-      select: "empty",
-      quantity: "0"
-    }
-  ],
+  
+  value: []
+  
 }
 
 export const counterSlice = createSlice({
@@ -25,8 +25,10 @@ export const counterSlice = createSlice({
   reducers: {
     
     incrementByAmount: (state, action: PayloadAction<DataType[]>) => {
-       state.value.push(...action.payload)
-      console.log("increment amount", state.value)
+      console.log("payload is ", action.payload) 
+      state.value.push(...action.payload)
+      // state.value = action.payload
+      
 
   },
 },
@@ -35,5 +37,5 @@ export const counterSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { incrementByAmount } = counterSlice.actions
 
-export const selectCount = (state:CounterState) => state
+export const selectCount = (state:RootState) => state.counter.value 
 export default counterSlice.reducer

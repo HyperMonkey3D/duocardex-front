@@ -28,13 +28,14 @@ setText({...text, [name]:value})
 
 useEffect(() => {
  // console.log("qqqq", text)
+const { select, quantity } = text
   if(text.quantity !== "") {
     dispatch(incrementByAmount([text]))
   }
 }, [text.quantity])
 
 
-  console.log("XXXX", count)
+ 
   return (
     <div className="flex" key={keyz + 1}>
       

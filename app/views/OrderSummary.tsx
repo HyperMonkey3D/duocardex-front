@@ -8,12 +8,12 @@ import { useEffect } from "react";
 const OrderSummary = () => {
 
   const count = useSelector(selectCount);
-console.log("-----", count)
+
 
 
 useEffect(()=> {
-  
-}, [])
+  console.log("in usefeect in order summary: ", count.length)
+}, [count])
 
 
   return (
@@ -28,11 +28,13 @@ useEffect(()=> {
         <h4>Price</h4>
         <h4>Total</h4>
       </div>
+
+      <h2>{}</h2>
 {
-  count.value.length > 0&&
-  count.value.map((item)=> {
+  
+  count.map((item, index)=> {
     return(
-      <div>
+      <div key={index}>
         <p>eeeee {item.quantity}</p>
       </div>
     )
