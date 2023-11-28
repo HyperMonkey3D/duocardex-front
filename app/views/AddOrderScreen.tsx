@@ -27,6 +27,7 @@ console.log("111111111", countz)
   
 
   const [dropdownList, setDropdownList] = useState<JSX.Element[]>([]);
+const [nextState, setNextState] = useState(false)
 
   const [clinics, setClinics] = useState<[]>([])
   const [selectedClinic, setSelectedClinic] = useState("")
@@ -39,10 +40,18 @@ console.log("111111111", countz)
 
   const addNewDrop = () => {
     
-    const newElement = <ProductsDropdown products={productList} keyz={`key-${dropdownList.length}`} />;
+    const newElement = <ProductsDropdown nextState={nextState} products={productList} keyz={`key-${dropdownList.length}`} />;
     setDropdownList((prevElementList) => [...prevElementList, newElement]);
     
   };
+
+  const changeNextState = () => {
+    if(!nextState) {
+      setNextState(true)
+    } else {
+      setNextState(false)
+    }
+  }
 
   const deleteLast = () => {
     setDropdownList((prevList) => {
@@ -105,8 +114,9 @@ console.log("Eeee", countz)
           </div>
           <div>
             <label htmlFor="">Add a comment</label>
-            <textarea name="" id="" cols={30} rows={10} value={comment} onChange={ (e) => setComment(e.target.value)}></textarea>
+            <textarea name="" id="" cols={30} rows={5} value={comment} onChange={ (e) => setComment(e.target.value)}></textarea>
           </div>
+
         </form>
         <OrderSummary />
 

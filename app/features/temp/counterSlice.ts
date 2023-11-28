@@ -35,5 +35,5 @@ export const counterSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { incrementByAmount } = counterSlice.actions
 
-export const selectCount = (state:CounterState) => state.value
+export const selectCount = (state:CounterState) => state
 export default counterSlice.reducer

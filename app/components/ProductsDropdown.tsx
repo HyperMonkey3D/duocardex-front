@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 interface Props {
   keyz: string;
   products: Data[]
+  nextState: boolean
 }
 
 interface Data {
@@ -11,7 +12,7 @@ interface Data {
   ProductName: string
 }
 
-const ProductsDropdown = ({ keyz, products }: Props) => {
+const ProductsDropdown = ({ keyz, products, nextState }: Props) => {
   const dispatch = useDispatch();
   const count = useSelector(selectCount);
 const [text, setText] = useState({

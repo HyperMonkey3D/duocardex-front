@@ -1,8 +1,21 @@
 "use client"
 
 import SummaryRow from "../components/SummaryRow";
+import { useSelector, useDispatch } from "react-redux";
+import {  incrementByAmount, selectCount } from "@/app/features/temp/counterSlice";
+import { useEffect } from "react";
 
 const OrderSummary = () => {
+
+  const count = useSelector(selectCount);
+console.log("-----", count)
+
+
+useEffect(()=> {
+  
+}, [])
+
+
   return (
     <div className="bg-slate-200 w-full h-full">
       <div>
@@ -15,6 +28,16 @@ const OrderSummary = () => {
         <h4>Price</h4>
         <h4>Total</h4>
       </div>
+{
+  count.value.length > 0&&
+  count.value.map((item)=> {
+    return(
+      <div>
+        <p>eeeee {item.quantity}</p>
+      </div>
+    )
+  })
+}
       <SummaryRow />
       
       <div className="flex bg-slate-600">
