@@ -1,3 +1,7 @@
+interface Props {
+    
+}
+
 const SummaryRow = () => {
     return(
 <div className="flex bg-slate-300">

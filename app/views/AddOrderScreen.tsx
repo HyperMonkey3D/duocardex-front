@@ -11,6 +11,7 @@ import OrderSummary from "./OrderSummary";
 import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
+import { incrementProductList } from "../features/product/productSlice";
 
 const AddOrderScreen = () => {
 
@@ -23,7 +24,7 @@ const AddOrderScreen = () => {
 
   //const count = useSelector((state: RootState) => state.counter.value);
 
-console.log("firs in addorderscren", countz)
+
   
 
   const [dropdownList, setDropdownList] = useState<JSX.Element[]>([]);
@@ -32,15 +33,16 @@ const [nextState, setNextState] = useState(false)
   const [clinics, setClinics] = useState<[]>([])
   const [selectedClinic, setSelectedClinic] = useState("")
 
-  const [productList, setProductList] = useState([])
+  const [productList, setProductList] = useState<[]>([])
   const [comment, setComment] = useState("")
 
+ const dispatch = useDispatch()
   const clinicsURL = "http://localhost:8000/clients"
   const productsURL = "http://localhost:8000/items"
 
   const addNewDrop = () => {
     
-    const newElement = <ProductsDropdown nextState={nextState} products={productList} keyz={`key-${dropdownList.length}`} />;
+    const newElement = <ProductsDropdown nextState={nextState}  keyz={`key-${dropdownList.length}`} />;
     setDropdownList((prevElementList) => [...prevElementList, newElement]);
     
   };
@@ -69,7 +71,7 @@ const [nextState, setNextState] = useState(false)
 
   const fetchProducts = async () => {
     const products = await axios.get(productsURL)
-   
+   //dispatch(incrementProductList([products.data]))
     setProductList(products.data)
   }
 
@@ -78,7 +80,12 @@ const [nextState, setNextState] = useState(false)
     fetchProducts()
   }, [])
 
-console.log("after use effect in addorderscreen", countz)
+
+  useEffect(() => {
+    dispatch(incrementProductList(productList))
+   // console.log("useeffect in length")
+  },[productList.length>0])
+
 
   return (
     <div className="bg-slate-300 h-full w-full">

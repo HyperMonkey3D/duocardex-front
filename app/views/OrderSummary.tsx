@@ -4,16 +4,17 @@ import SummaryRow from "../components/SummaryRow";
 import { useSelector, useDispatch } from "react-redux";
 import {  incrementByAmount, selectCount } from "@/app/features/temp/counterSlice";
 import { useEffect } from "react";
+import { selectProduct } from "../features/product/productSlice";
+
+
 
 const OrderSummary = () => {
 
   const count = useSelector(selectCount);
 
+  const products = useSelector(selectProduct);
+console.log("products", products)
 
-
-useEffect(()=> {
-  console.log("in usefeect in order summary: ", count.length)
-}, [count])
 
 
   return (
@@ -29,13 +30,26 @@ useEffect(()=> {
         <h4>Total</h4>
       </div>
 
-      <h2>{}</h2>
+      
 {
   
   count.map((item, index)=> {
     return(
-      <div key={index}>
-        <p>eeeee {item.quantity}</p>
+      <div key={index} className="flex">
+       
+        <p className="text-red-600">{item.quantity}</p>
+        {
+          products
+          .filter(product => product.ProductID === parseInt(item.select))
+          .map(item => {
+            return(
+              <>
+                <p>{item.ProductName}</p>
+                <p>{item.Price}</p>
+              </>
+            )
+          })
+        }
       </div>
     )
   })
