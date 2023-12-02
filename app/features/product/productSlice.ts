@@ -22,7 +22,7 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     incrementProductList: (state, action: PayloadAction<ProductDetails[]>) => {
-        console.log("action", action.payload)
+       
         state.value.push(...action.payload)
         
     },
