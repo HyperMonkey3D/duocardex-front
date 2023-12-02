@@ -35,6 +35,7 @@ const OrderSummary = ({ comment }: Comment) => {
       {count.map((item, index) => {
         return (
           <div key={index} className="flex">
+            <h1>TEST REBASE</h1>
             <p className="text-red-600">{item.quantity}</p>
 
             {products
