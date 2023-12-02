@@ -24,7 +24,6 @@ export const productSlice = createSlice({
     incrementProductList: (state, action: PayloadAction<ProductDetails[]>) => {
        
         state.value.push(...action.payload)
-        
     },
   },
     
