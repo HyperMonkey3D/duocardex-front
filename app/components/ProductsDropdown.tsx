@@ -11,6 +11,9 @@ interface Details {
   ProductName: string;
 }
 //////// state
+
+
+//--- product id, unit price, total amount per product, quantity
 const ProductsDropdown = () => {
   const products = useSelector(selectProduct);
   const dispatch = useDispatch();
@@ -25,6 +28,8 @@ const ProductsDropdown = () => {
   const [processedData, setProcessedData] = useState({
     select: "",
     quantity: "",
+    productName: "",
+    unitPrice: 0,
     totalPrice: 0,
   });
   /////////
@@ -35,23 +40,19 @@ const ProductsDropdown = () => {
     setKindAndAmount({ ...kindAndAmount, [name]: value });
   };
 
-  //observe add to know if an item was added
-  const changeadd = () => {
-    if (!add) {
-      setAdd(true);
-    } else {
-      setAdd(false);
-    }
-  };
+ 
 
   //calculate the total to pay for each row of items added
   const calculateTransactionDetails = () => {
     const newprod = products.filter(
       (product) => product.ProductID === parseInt(kindAndAmount.select)
     );
+    console.log("newprod" ,newprod[0]?.ProductName)
     const total = newprod[0]?.Price * parseInt(kindAndAmount.quantity);
     setProcessedData({
       ...kindAndAmount,
+      productName: newprod[0]?.ProductName,
+      unitPrice: newprod[0]?.Price,
       totalPrice: total,
     });
   };

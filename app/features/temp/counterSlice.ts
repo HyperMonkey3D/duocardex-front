@@ -5,6 +5,8 @@ import type { RootState } from "@/app/redux/store";
 export interface DataType {
   select: string;
   quantity: string;
+  productName: string;
+  unitPrice: number;
   totalPrice: number;
 }
 

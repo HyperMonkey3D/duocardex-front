@@ -2,13 +2,20 @@
 
 import { useEffect, useState } from "react";
 
-// ClientID    String
-//   ProductID   Int
-//   Quantity    Int
-//   UnitPrice   Decimal
-//   Comment     String
-//   TotalAmount Decimal
+// ClientID    String - add order screen
+//   ProductID   Int - product dropdown
+//   Quantity    Int - product dropdown
+//   UnitPrice   Decimal - product dropdow
+//   Comment     String - add order screen 
+//   TotalAmount per product Decimal - product dropdown 
 
+
+import {
+  incrementByAmount,
+  selectCount,
+} from "@/app/features/temp/counterSlice";
+
+//--- client id and comment
 import ProductsDropdown from "../components/ProductsDropdown";
 import OrderSummary from "./OrderSummary";
 
@@ -19,9 +26,12 @@ import { incrementProductList } from "../features/product/productSlice";
 
 const AddOrderScreen = () => {
   interface Clinics {
-    ID: string;
+    ClientID: string;
     ClinicName: string;
   }
+
+
+  const dasProducts = useSelector(selectCount)
 
   const [clinics, setClinics] = useState<[]>([]);
   const [selectedClinic, setSelectedClinic] = useState("");
@@ -41,9 +51,25 @@ const AddOrderScreen = () => {
 
   const fetchProducts = async () => {
     const products = await axios.get(productsURL);
-
     setProductList(products.data);
   };
+
+
+  const filterOrderToSend = () => {
+    const sortedOrder = dasProducts.filter((element)=> !Number.isNaN(element.totalPrice) && element.unitPrice > 0)
+    
+    return sortedOrder
+  }
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault()
+    const order = {
+      ClientID: selectedClinic,
+      Orders: filterOrderToSend(),
+      Comment: comment
+    }
+    console.log("objext ", order)
+  }
 
   useEffect(() => {
     fetchClinics();
@@ -55,13 +81,17 @@ const AddOrderScreen = () => {
     dispatch(incrementProductList(productList));
   }, [productList.length > 0]);
 
+  useEffect(() => {
+    filterOrderToSend()
+  }, [dasProducts])
+
   return (
     <div className="bg-slate-300 h-full w-full">
       <div>
         <h2>add new order</h2>
       </div>
       <div className="flex">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="">Select A Clinic</label>
             <select
@@ -71,9 +101,9 @@ const AddOrderScreen = () => {
               onChange={(e) => setSelectedClinic(e.target.value)}
             >
               {clinics.map((item: Clinics) => {
-                const { ClinicName, ID } = item;
+                const { ClinicName, ClientID} = item;
                 return (
-                  <option value={ID} key={ID}>
+                  <option value={ClientID} key={ClientID}>
                     {ClinicName}
                   </option>
                 );
@@ -94,6 +124,7 @@ const AddOrderScreen = () => {
               onChange={(e) => setComment(e.target.value)}
             ></textarea>
           </div>
+          <button type="submit" className="bg-black text-white">submit</button>
         </form>
         <OrderSummary comment={comment}/>
       </div>

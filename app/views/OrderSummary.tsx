@@ -8,6 +8,8 @@ interface Comment {
   comment: string;
 }
 
+
+//---total amount and total number of items
 const OrderSummary = ({ comment }: Comment) => {
   const count = useSelector(selectCount);
   const products = useSelector(selectProduct);
@@ -35,18 +37,18 @@ const OrderSummary = ({ comment }: Comment) => {
       {count.map((item, index) => {
         return (
           <div key={index} className="flex">
-            <h1>TEST REBASE</h1>
+          
             <p className="text-red-600">{item.quantity}</p>
 
             {products
               .filter((product) => product.ProductID === parseInt(item.select))
               .map((product) => {
                 return (
-                  <>
+                  <div key={product.ProductID} className="flex">
                     <p className="mx-6">{product.ProductName}</p>
                     <p className="mx-6">{product.Price}</p>
                     <p className="mx-6">{item.totalPrice}</p>
-                  </>
+                  </div>
                 );
               })}
           </div>
