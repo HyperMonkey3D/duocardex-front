@@ -2,12 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-// ClientID    String - add order screen
-//   ProductID   Int - product dropdown
-//   Quantity    Int - product dropdown
-//   UnitPrice   Decimal - product dropdow
-//   Comment     String - add order screen 
-//   TotalAmount per product Decimal - product dropdown 
 
 
 import {
@@ -42,6 +36,7 @@ const AddOrderScreen = () => {
   const dispatch = useDispatch();
   const clinicsURL = "http://localhost:8000/clients";
   const productsURL = "http://localhost:8000/items";
+  const ordersURL = "http://localhost:8000/orders"
 
   const fetchClinics = async () => {
     const clinics = await axios.get(clinicsURL);
@@ -61,14 +56,20 @@ const AddOrderScreen = () => {
     return sortedOrder
   }
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault()
     const order = {
       ClientID: selectedClinic,
       Orders: filterOrderToSend(),
       Comment: comment
     }
-    console.log("objext ", order)
+
+    const postOrder = await axios.post(ordersURL, order)
+
+    const  postResult = postOrder.data
+    console.log("post result is", postResult)
+    
+    //console.log("objext ", order)
   }
 
   useEffect(() => {
