@@ -40,12 +40,13 @@ const AddOrderScreen = () => {
 
   const fetchClinics = async () => {
     const clinics = await axios.get(clinicsURL);
-
+console.log("fetched clinics")
     setClinics(clinics.data);
   };
 
   const fetchProducts = async () => {
     const products = await axios.get(productsURL);
+    console.log("fetched products")
     setProductList(products.data);
   };
 
@@ -73,9 +74,22 @@ const AddOrderScreen = () => {
   }
 
   useEffect(() => {
-    fetchClinics();
-    fetchProducts();
+    if(clinics.length === 0) {
+      
+      fetchClinics();
+     
+    }
+    
+    
+    if(productList.length === 0) {
+     
+      fetchProducts();
+     
+    }
   }, []);
+
+  console.log("clinic lenght", clinics)
+  console.log("product lenght", productList)
 
   useEffect(() => {
     //dispatch the list of products to a global state

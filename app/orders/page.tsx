@@ -1,9 +1,10 @@
 import MainContainer from "../components/MainContainer"
+import OrderRow from "../components/OrderRow"
 
 const Orders = () => {
     return(
         <MainContainer>
-            <div>orders</div>
+            <OrderRow />
         </MainContainer>
     )
 }
